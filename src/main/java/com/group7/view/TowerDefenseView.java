@@ -11,6 +11,8 @@ public class TowerDefenseView extends Application{
     static final double WINDOW_HEIGHT = 1080;
     static final double WINDOW_WIDTH = 1920;
 
+    private boolean pushTest = false;
+
     // fields
     private BorderPane viewHandler;
     private boolean isInGame = false;
