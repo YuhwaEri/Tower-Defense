@@ -4,4 +4,5 @@ module com.group7 {
 
     opens com.group7 to javafx.fxml;
     exports com.group7;
+    exports com.group7.view;
 }
