@@ -6,5 +6,5 @@ module com.group7 {
     exports com.group7;
     exports com.group7.view;
     exports com.group7.model;
-    //exports com.group7.controller;
+    exports com.group7.controller;
 }
