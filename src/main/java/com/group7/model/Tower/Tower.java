@@ -4,7 +4,7 @@ public class Tower {
     private int size;
     private int cost;
     private int attack;
-    private int attack_speed;
+    private int attackSpeed;
     private String picture;
     private String name;
 
@@ -30,10 +30,10 @@ public class Tower {
         this.attack = attack;
     }
     public int getAttack_speed() {
-        return attack_speed;
+        return attackSpeed;
     }
     public void setAttack_speed(int attack_speed) {
-        this.attack_speed = attack_speed;
+        this.attackSpeed = attack_speed;
     }
     public String getPicture() {
         return picture;

@@ -4,7 +4,7 @@ public class Tower3  extends Tower{
     private int size;
     private int cost;
     private int attack;
-    private int attack_speed;
+    private int attackSpeed;
     private String picture;
     private String name;
 
@@ -13,7 +13,7 @@ public class Tower3  extends Tower{
         this.size = 1;
         this.cost = 125;
         this.attack = 125;
-        this.attack_speed = 1;
+        this.attackSpeed = 1;
         this.picture = "src/main/resources/tower3.png";
         this.name = "Tower3";
     }

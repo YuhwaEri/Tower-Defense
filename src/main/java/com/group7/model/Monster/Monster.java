@@ -2,11 +2,11 @@ package com.group7.model.Monster;
 
 public class Monster {
     private int health;
-    private int movespeed;
+    private int moveSpeed;
     private int size;
-    private int Height;
+    private int height;
     private int attack;
-    private int attack_speed;
+    private int attackSpeed;
     private String picture;
     private String name;
 
@@ -20,10 +20,10 @@ public class Monster {
         this.health = health;
     }
     public int getMovespeed() {
-        return movespeed;
+        return moveSpeed;
     }
-    public void setMovespeed(int movespeed) {
-        this.movespeed = movespeed;
+    public void setMovespeed(int moveSpeed) {
+        this.moveSpeed = moveSpeed;
     }
     public int getSize() {
         return size;
@@ -32,10 +32,10 @@ public class Monster {
         this.size = size;
     }
     public int getHeight() {
-        return Height;
+        return height;
     }
     public void setHeight(int height) {
-        Height = height;
+        this.height = height;
     }
     public int getAttack() {
         return attack;
@@ -43,11 +43,11 @@ public class Monster {
     public void setAttack(int attack) {
         this.attack = attack;
     }
-    public int getAttack_speed() {
-        return attack_speed;
+    public int getAttackSpeed() {
+        return attackSpeed;
     }
-    public void setAttack_speed(int attack_speed) {
-        this.attack_speed = attack_speed;
+    public void setAttackSpeed(int attackSpeed) {
+        this.attackSpeed = attackSpeed;
     }
     public String getPicture() {
         return picture;

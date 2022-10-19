@@ -4,7 +4,7 @@ public class Tower1 {
     private int size;
     private int cost;
     private int attack;
-    private int attack_speed;
+    private int attackSpeed;
     private String picture;
     private String name;
 
@@ -13,7 +13,7 @@ public class Tower1 {
         this.size = 1;
         this.cost = 80;
         this.attack = 25;
-        this.attack_speed = 2;
+        this.attackSpeed = 2;
         this.picture = "src/main/resources/tower1.png";
         this.name = "Tower1";
     }
