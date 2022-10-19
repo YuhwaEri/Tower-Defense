@@ -12,7 +12,4 @@ public class TowerDefenseController {
         this.model = model;
     }
 
-
-
-    
 }
