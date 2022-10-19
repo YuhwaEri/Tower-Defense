@@ -9,7 +9,7 @@ public class TowerDefenseController {
 
     public TowerDefenseController(TowerDefenseModel model) {
 
-        TowerDefenseController.model = model;
+        this.model = model;
     }
 
 
