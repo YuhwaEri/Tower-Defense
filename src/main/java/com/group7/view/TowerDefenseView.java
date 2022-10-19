@@ -2,6 +2,9 @@ package com.group7.view;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import com.group7.controller.TowerDefenseController;
+import com.group7.model.TowerDefenseModel;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -25,6 +28,13 @@ public class TowerDefenseView extends Application{
     private BorderPane viewHandler;
     private boolean isInGame = false;
     private GameView gameView;
+
+
+    // model and controller
+    private TowerDefenseModel model;
+    private TowerDefenseController controller;
+
+
 
     @Override
     public void start(Stage primaryStage) {
