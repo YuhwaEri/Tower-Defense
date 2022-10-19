@@ -1,5 +1,5 @@
 package com.group7.model;
 
-public class dummyjava {
+public class TowerDefenseModel {
     
 }
