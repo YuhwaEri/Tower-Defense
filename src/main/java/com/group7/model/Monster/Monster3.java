@@ -17,7 +17,7 @@ public class Monster3 {
         this.attack_speed = 1;
         this.size = 1;
         this.attack = 15;
-        this.picture = "src/main/java/com/group7/model/Monster/monster3.png";
+        this.picture = "src/main/resources/monster3.png";
         this.name = "monster3";
     }
 }

@@ -14,7 +14,7 @@ public class Tower3  extends Tower{
         this.cost = 125;
         this.attack = 125;
         this.attack_speed = 1;
-        this.picture = "src/main/java/com/group7/model/Tower/tower3.png";
+        this.picture = "src/main/resources/tower3.png";
         this.name = "Tower3";
     }
 }

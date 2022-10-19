@@ -17,7 +17,7 @@ public class Monster1 extends Monster{
         this.attack_speed = 1;
         this.size = 1;
         this.attack = 10;
-        this.picture = "src/main/java/com/group7/model/Monster/monster1.png";
+        this.picture = "src/main/resources/monster1.png";
         this.name = "monster1";
     }
 
