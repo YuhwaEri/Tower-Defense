@@ -15,8 +15,8 @@ import javafx.scene.image.Image;
 public class TowerDefenseView extends Application{
 
     static Image terrain = null;
-    //static Image monster = null;
-    //static Image tower = null;
+    static Image monster = null;
+    static Image tower = null;
 
     private final StackPane gameStack = new StackPane();
 
@@ -50,8 +50,11 @@ public class TowerDefenseView extends Application{
 
     private void loadSprites(){
         try{
-            FileInputStream testImg = new FileInputStream("src\\main\\java\\com\\group7\\resources\\katakata.png");
-            terrain = new Image(testImg);
+
+            terrain = new Image(new FileInputStream("src\\main\\resources\\grass.png"));
+            monster = new Image(new FileInputStream("src\\main\\resources\\monster3.png"));
+            tower = new Image(new FileInputStream("src\\main\\resources\\tower2.png"));
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
