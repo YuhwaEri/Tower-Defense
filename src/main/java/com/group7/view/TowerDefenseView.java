@@ -1,5 +1,8 @@
 package com.group7.view;
 
+import com.group7.controller.TowerDefenseController;
+import com.group7.model.TowerDefenseModel;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -16,6 +19,12 @@ public class TowerDefenseView extends Application{
     // fields
     private BorderPane viewHandler;
     private boolean isInGame = false;
+
+    // model and controller
+    private TowerDefenseModel model;
+    private TowerDefenseController controller;
+
+
 
     @Override
     public void start(Stage primaryStage) {
