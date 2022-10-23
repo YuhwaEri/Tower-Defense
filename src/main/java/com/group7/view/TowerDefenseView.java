@@ -48,10 +48,10 @@ public class TowerDefenseView extends Application{
 
     private void loadSprites(){
         try{
-            bg = new Image(new FileInputStream("src\\main\\resources\\background.png"));
-            terrain = new Image(new FileInputStream("src\\main\\resources\\terrain.png"));
-            monster = new Image(new FileInputStream("src\\main\\resources\\monster3.png"));
-            tower = new Image(new FileInputStream("src\\main\\resources\\tower2.png"));
+            bg = new Image(new FileInputStream("src/main/resources/background.png"));
+            //terrain = new Image(new FileInputStream("src/main/resources/terrain.png"));
+            monster = new Image(new FileInputStream("src/main/resources/monster3.png"));
+            tower = new Image(new FileInputStream("src/main/resources/tower2.png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

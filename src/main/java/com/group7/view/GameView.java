@@ -61,8 +61,8 @@ public class GameView extends BorderPane{
         }   
 
         try {
-            cellGrid.get(8).get(9).getChildren().add(new ImageView(new Image(new FileInputStream("src\\main\\resources\\tower2.png"), 60, 60, false, false)));
-            cellGrid.get(12).get(3).getChildren().add(new ImageView(new Image(new FileInputStream("src\\main\\resources\\monster3.png"), 80, 80, false, false)));
+            cellGrid.get(8).get(9).getChildren().add(new ImageView(new Image(new FileInputStream("src/main/resources/tower2.png"), 60, 60, false, false)));
+            cellGrid.get(12).get(3).getChildren().add(new ImageView(new Image(new FileInputStream("src/main/resources/monster3.png"), 80, 80, false, false)));
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
