@@ -1,64 +1,39 @@
 package com.group7.model.Monster;
 
-public class Monster {
-    private int health;
-    private int moveSpeed;
-    private int size;
-    private int height;
-    private int attack;
-    private int attackSpeed;
-    private String picture;
-    private String name;
+import com.group7.model.TowerDefenseEntity;
 
-    public Monster(){
-        
+public class Monster extends TowerDefenseEntity {
+    protected int monsterID;
+    protected MonsterType type;
+
+    protected int health;
+    protected int moveSpeed;
+
+
+    public Monster(MonsterType type, int monsterID) {
+        this.health = type.getHealth();
+        this.moveSpeed = type.getMoveSpeed();
+
+        this.picturePath = type.getPicturePath();
+        this.monsterID = monsterID;
+
     }
+
     public int getHealth() {
         return health;
     }
     public void setHealth(int health) {
         this.health = health;
     }
-    public int getMovespeed() {
+    public int getMoveSpeed() {
         return moveSpeed;
     }
-    public void setMovespeed(int moveSpeed) {
+    public void setMoveSpeed(int moveSpeed) {
         this.moveSpeed = moveSpeed;
     }
-    public int getSize() {
-        return size;
-    }
-    public void setSize(int size) {
-        this.size = size;
-    }
-    public int getHeight() {
-        return height;
-    }
-    public void setHeight(int height) {
-        this.height = height;
-    }
-    public int getAttack() {
-        return attack;
-    }
-    public void setAttack(int attack) {
-        this.attack = attack;
-    }
-    public int getAttackSpeed() {
-        return attackSpeed;
-    }
-    public void setAttackSpeed(int attackSpeed) {
-        this.attackSpeed = attackSpeed;
-    }
-    public String getPicture() {
-        return picture;
-    }
-    public void setPicture(String picture) {
-        this.picture = picture;
-    }
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
+
+    public int getMonsterID() {
+
+        return monsterID;
     }
 }
