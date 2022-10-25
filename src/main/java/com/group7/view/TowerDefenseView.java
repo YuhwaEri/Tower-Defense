@@ -48,7 +48,7 @@ public class TowerDefenseView extends Application{
 
     private void loadSprites(){
         try{
-            bg = new Image(new FileInputStream("src/main/resources/background.png"));
+            bg = new Image(new FileInputStream("src/main/resources/map1.png"));
             //terrain = new Image(new FileInputStream("src/main/resources/terrain.png"));
             monster = new Image(new FileInputStream("src/main/resources/monster3.png"));
             tower = new Image(new FileInputStream("src/main/resources/tower2.png"));

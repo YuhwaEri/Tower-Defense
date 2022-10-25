@@ -8,12 +8,18 @@ public class Tower extends TowerDefenseEntity {
 
     protected int cost;
     protected int attack;
-    protected int attackSpeed;
+    protected int attackCooldown;
+    protected double range;
+    protected int damageDealt;
+    protected int kills;
 
     public Tower(TowerType type, int towerID) {
         this.cost = type.getCost();
         this.attack = type.getAttack();
-        this.attackSpeed = type.getAttackSpeed();
+        this.attackCooldown = type.getAttackCooldown();
+        this.range = type.getRange();
+        this.damageDealt = 0;
+        this.kills = 0;
 
         this.picturePath = type.getPicturePath();
         this.towerID = towerID;
@@ -31,15 +37,51 @@ public class Tower extends TowerDefenseEntity {
     public void setAttack(int attack) {
         this.attack = attack;
     }
-    public int getAttackSpeed() {
-        return attackSpeed;
+    public int getAttackCooldown() {
+        return attackCooldown;
     }
-    public void setAttackSpeed(int attack_speed) {
-        this.attackSpeed = attack_speed;
+    public void setAttackCooldown(int attackCooldown) {
+        this.attackCooldown = attackCooldown;
     }
 
     public int getTowerID() {
         return towerID;
+    }
+
+    public int getDamageDealt() {
+        return damageDealt;
+    }
+
+    public void setDamageDealt(int damageDealt) {
+        this.damageDealt = damageDealt;
+    }
+
+    public void addDamageDealt(int damageDealt) {
+        setDamageDealt(this.damageDealt + damageDealt);
+    }
+
+    public int getKills() {
+        return kills;
+    }
+
+    public void setKills(int kills) {
+        this.kills = kills;
+    }
+
+    public int addKills(int kills) {
+        int newKills = this.kills + kills;
+
+        setKills(newKills);
+
+        return newKills;
+    }
+
+    public double getRange() {
+        return range;
+    }
+
+    public void setRange(double range) {
+        this.range = range;
     }
 
 

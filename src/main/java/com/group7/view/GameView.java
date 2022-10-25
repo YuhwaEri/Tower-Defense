@@ -15,7 +15,6 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import com.group7.controller.TowerDefenseController;
-import com.group7.model.Grid.Grid;
 
 public class GameView extends BorderPane{
     // internal objects used
@@ -23,7 +22,6 @@ public class GameView extends BorderPane{
     private final TowerDefenseController controller;
     private final StackPane gameStack;
     private final GridPane gridPane = new GridPane();
-    private final Grid grid = new Grid();
     private final ArrayList<ArrayList<StackPane>> cellGrid = new ArrayList<>();
 
     public GameView(TowerDefenseView view, StackPane gameStack, TowerDefenseController controller){
