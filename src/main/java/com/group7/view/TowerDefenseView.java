@@ -3,6 +3,7 @@ package com.group7.view;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import com.group7.controller.TowerDefenseController;
+import com.group7.model.TowerDefenseModel;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -17,6 +18,7 @@ public class TowerDefenseView extends Application{
     static Image monster = null;
     static Image tower = null;
     static Image bg = null;
+    static Image placeTowerBtn = null;
 
     private final StackPane gameStack = new StackPane();
 
@@ -38,8 +40,9 @@ public class TowerDefenseView extends Application{
     public void start(Stage primaryStage) {
         primaryStage.setTitle("TowerDefense");
         // initializing the internal classes
+        this.controller = new TowerDefenseController(new TowerDefenseModel());
         loadSprites();
-        gameView = new GameView(this, gameStack, controller);
+        gameView = new GameView(this, gameStack, this.controller);
         viewHandler = new BorderPane();
         Scene scene = new Scene(gameView, WINDOW_WIDTH, WINDOW_HEIGHT);
         primaryStage.setScene(scene);
@@ -51,7 +54,8 @@ public class TowerDefenseView extends Application{
             bg = new Image(new FileInputStream("src/main/resources/map1.png"));
             //terrain = new Image(new FileInputStream("src/main/resources/terrain.png"));
             monster = new Image(new FileInputStream("src/main/resources/monster3.png"));
-            tower = new Image(new FileInputStream("src/main/resources/tower2.png"));
+            tower = new Image(new FileInputStream("src/main/resources/tower2.png"), 60, 60, false, false);
+            placeTowerBtn = new Image(new FileInputStream("src/main/resources/placeTower.png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

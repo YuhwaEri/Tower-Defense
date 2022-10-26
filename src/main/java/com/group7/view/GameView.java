@@ -15,6 +15,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import com.group7.controller.TowerDefenseController;
+import com.group7.model.Tower.TowerType;
 
 public class GameView extends BorderPane{
     // internal objects used
@@ -23,6 +24,7 @@ public class GameView extends BorderPane{
     private final StackPane gameStack;
     private final GridPane gridPane = new GridPane();
     private final ArrayList<ArrayList<StackPane>> cellGrid = new ArrayList<>();
+    private boolean placeTowerMode = false;
 
     public GameView(TowerDefenseView view, StackPane gameStack, TowerDefenseController controller){
         this.view = view;
@@ -39,6 +41,30 @@ public class GameView extends BorderPane{
     }
 
     private void setupGameScene(){
+
+        // setting up the menu
+        HBox placeTower = new HBox();
+        placeTower.setPadding(new Insets(5));
+        placeTower.setPrefSize(TowerDefenseView.WINDOW_WIDTH, 100);
+        ImageView placeTowerBtn = new ImageView(TowerDefenseView.placeTowerBtn);
+        placeTower.getChildren().add(placeTowerBtn);
+        placeTowerBtn.setOnMouseClicked((event)-> {
+            placeTowerMode = true;
+
+            for (int x = 0; x < 12; x++) {
+                for (int y = 0; y < 20; y++) {
+                    int col = x;
+                    int row = y;
+                    cellGrid.get(x).get(y).setOnMouseClicked((event2) -> {
+                        controller.placeTower(TowerType.TOWER_2 , col, row);
+                        placeTowerMode = false;
+                        cellGrid.get(col).get(row).getChildren().add(new ImageView(TowerDefenseView.tower));
+                    });
+                }
+            }
+        });
+
+        setBottom(placeTower);
 
         setCenter(gridPane);
 
