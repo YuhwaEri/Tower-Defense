@@ -8,11 +8,14 @@ public class Monster extends TowerDefenseEntity {
 
     protected int health;
     protected int moveSpeed;
+    protected int killPayout;
+    protected int livesTaken;
 
 
     public Monster(MonsterType type, int monsterID) {
         this.health = type.getHealth();
         this.moveSpeed = type.getMoveSpeed();
+        this.killPayout = type.getKillPayout();
 
         this.picturePath = type.getPicturePath();
         this.monsterID = monsterID;
@@ -35,5 +38,13 @@ public class Monster extends TowerDefenseEntity {
     public int getMonsterID() {
 
         return monsterID;
+    }
+
+    public int getKillPayout() {
+        return killPayout;
+    }
+
+    public int getLivesTaken() {
+        return livesTaken;
     }
 }

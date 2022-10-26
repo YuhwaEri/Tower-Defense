@@ -1,4 +1,5 @@
 package com.group7.model;
+import com.group7.model.Map.Maps;
 import com.group7.model.Monster.*;
 import com.group7.model.Tower.*;
 
@@ -8,6 +9,8 @@ import java.util.ArrayList;
 public class TowerDefenseModel {
 
     private int money;
+    private int lives;
+    private int kills;
     private int width;
     private int length;
     private List<Monster> monsters;
@@ -15,10 +18,10 @@ public class TowerDefenseModel {
     private TowerFactory towerFactory;
     private MonsterFactory monsterFactory;
 
+    private Maps map;
+
     public TowerDefenseModel() {
         this.money = 0;
-        this.width = 100;
-        this.length = 100;
 
         this.monsters = new ArrayList<Monster>();
         this.towers = new ArrayList<Tower>();
@@ -26,6 +29,16 @@ public class TowerDefenseModel {
         this.towerFactory = new TowerFactory();
         this.monsterFactory = new MonsterFactory();
 
+        this.map = Maps.MAP_1;
+
+        this.width = map.getWidth();
+        this.length = map.getLength();
+
+
+    }
+
+    public Maps getMap() {
+        return map;
     }
 
     public int getMoney() {
@@ -114,6 +127,36 @@ public class TowerDefenseModel {
                 return;
             }
         }
+    }
+
+    public int getKills() {
+        return kills;
+    }
+
+    public void setKills(int kills) {
+        this.kills = kills;
+    }
+
+    public int addKills(int kills) {
+        int newKills = this.kills + kills;
+        setKills(newKills);
+        return newKills;
+    }
+
+    public int getLives() {
+        return lives;
+    }
+
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
+
+    public int modifyLives(int delta) {
+        int newLives = this.lives + delta;
+
+        setLives(newLives);
+
+        return newLives;
     }
 
 
