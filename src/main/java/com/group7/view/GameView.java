@@ -30,12 +30,12 @@ public class GameView extends BorderPane{
         this.view = view;
         this.gameStack = gameStack;
         this.controller = controller;
-        setBackground(new Background(new BackgroundImage(
+        gridPane.setBackground(new Background(new BackgroundImage(
             TowerDefenseView.bg, 
             BackgroundRepeat.NO_REPEAT,
             BackgroundRepeat.NO_REPEAT,
             BackgroundPosition.CENTER,
-            new BackgroundSize(.8, .8, true, true, false, false)
+            new BackgroundSize(1, 1, true, true, false, false)
         )));
         setupGameScene();
     }
@@ -43,39 +43,23 @@ public class GameView extends BorderPane{
     private void setupGameScene(){
 
         // setting up the menu
-        HBox placeTower = new HBox();
-        placeTower.setPadding(new Insets(5));
-        placeTower.setPrefSize(TowerDefenseView.WINDOW_WIDTH, 100);
-        ImageView placeTowerBtn = new ImageView(TowerDefenseView.placeTowerBtn);
-        placeTower.getChildren().add(placeTowerBtn);
-        placeTowerBtn.setOnMouseClicked((event)-> {
-            placeTowerMode = true;
+        HBox bottomMenu = new HBox();
+        HBox topMenu = new HBox();
+        setupGameBoard(gridPane);
+        setupTopMenu(topMenu);
+        setupBottomMenu(bottomMenu);
 
-            for (int x = 0; x < 12; x++) {
-                for (int y = 0; y < 20; y++) {
-                    int col = x;
-                    int row = y;
-                    cellGrid.get(x).get(y).setOnMouseClicked((event2) -> {
-                        controller.placeTower(TowerType.TOWER_2 , col, row);
-                        placeTowerMode = false;
-                        cellGrid.get(col).get(row).getChildren().add(new ImageView(TowerDefenseView.tower));
-                    });
-                }
-            }
-        });
-
-        setBottom(placeTower);
-
+        // Positioning the pieces
+        setTop(topMenu);
         setCenter(gridPane);
-
+        setBottom(bottomMenu);
+        
         for (int i = 0; i < 12; i++){
             ArrayList<StackPane> cellRow = new ArrayList<>();
-            cellGrid.add(cellRow);
             for (int j = 0; j < 20; j++){
                 StackPane cell = new StackPane();
                 cell.setBackground(new Background( new BackgroundFill(Color.TRANSPARENT, null, null)));
                 cell.setPadding(new Insets(0));
-
                 cellRow.add(cell);
                 cell.setPrefHeight(60);
                 cell.setPrefWidth(60);
@@ -85,11 +69,48 @@ public class GameView extends BorderPane{
         }   
 
         try {
-            cellGrid.get(8).get(9).getChildren().add(new ImageView(new Image(new FileInputStream("src/main/resources/tower2.png"), 60, 60, false, false)));
-            cellGrid.get(12).get(3).getChildren().add(new ImageView(new Image(new FileInputStream("src/main/resources/monster3.png"), 80, 80, false, false)));
+            cellGrid.get(11).get(3).getChildren().add(new ImageView(new Image(new FileInputStream("src/main/resources/monster3.png"), 80, 80, false, false)));
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+
+    private void setupGameBoard(GridPane gridPane){
+
+    }
+
+    private void setupTopMenu(HBox topMenu){
+        topMenu.setBackground(new Background(new BackgroundImage(TowerDefenseView.terrain, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+        topMenu.setPadding(new Insets(0));
+        topMenu.setPrefSize(TowerDefenseView.WINDOW_WIDTH, 120);
+    }
+
+    private void setupBottomMenu(HBox bottomMenu){
+        bottomMenu.setPadding(new Insets(0));
+        bottomMenu.setPrefSize(TowerDefenseView.WINDOW_WIDTH, 120);
+        ImageView placeTowerBtn = new ImageView(TowerDefenseView.placeTowerBtn);
+        bottomMenu.getChildren().add(placeTowerBtn);
+        placeTowerBtn.setOnMouseClicked((event)-> {
+            placeTowerMode = true;
+
+            for (int x = 0; x < 20; x++) {
+                for (int y = 0; y < 12; y++) {
+                    int row = y;
+                    int col = x;
+                    cellGrid.get(y).get(x).setOnMouseClicked((event2) -> {
+                        if (placeTowerMode){
+                            controller.placeTower(TowerType.TOWER_2 , col, row);
+                            placeTowerMode = false;
+                            cellGrid.get(row).get(col).setBackground(new Background(new BackgroundImage (TowerDefenseView.tower, BackgroundRepeat.NO_REPEAT,
+                            BackgroundRepeat.NO_REPEAT,
+                            BackgroundPosition.CENTER,
+                            new BackgroundSize(60, 60, false, false, false, false) )));
+                            System.out.println("Tower placed at " + col + ":" + row);
+                        }
+                    });
+                }
+            }
+        });
     }
 }
