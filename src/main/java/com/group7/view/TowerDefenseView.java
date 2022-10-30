@@ -19,11 +19,12 @@ public class TowerDefenseView extends Application{
     static Image tower = null;
     static Image bg = null;
     static Image placeTowerBtn = null;
+    static Image bottomBar;
 
     private final StackPane gameStack = new StackPane();
 
     // Program Constants
-    static final double WINDOW_HEIGHT = 800;
+    static final double WINDOW_HEIGHT = 1050;
     static final double WINDOW_WIDTH = 1200;
 
     // fields
@@ -56,6 +57,7 @@ public class TowerDefenseView extends Application{
             monster = new Image(new FileInputStream("src/main/resources/monster3.png"));
             tower = new Image(new FileInputStream("src/main/resources/tower2.png"), 60, 60, false, false);
             placeTowerBtn = new Image(new FileInputStream("src/main/resources/placeTower.png"));
+            bottomBar = new Image(new FileInputStream("src/main/resources/toolbar.png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
