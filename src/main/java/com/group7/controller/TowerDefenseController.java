@@ -4,9 +4,12 @@ import com.group7.model.Monster.*;
 import com.group7.model.Tower.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+
 import com.group7.model.*;
+import com.group7.model.Map.Block;
 
 
 public class TowerDefenseController {
@@ -19,6 +22,14 @@ public class TowerDefenseController {
 
         model.setMoney(100);
         model.setLives(100);
+    }
+
+    public List<Monster> getMonsters() {
+        return model.getMonsters();
+    }
+
+    public List<Tower> getTowers() {
+        return model.getTowers();
     }
 
 
@@ -267,9 +278,12 @@ public class TowerDefenseController {
      * @param xCoord x-coordinate where monster should spawn
      * @param yCoord y-coordinate where monster should spawn
      */
-    public void spawnMonster(MonsterType type, int xCoord, int yCoord) {
+    public void spawnMonster(MonsterType type) {
+
+        Block startBlock = model.getMap().getPath().getBlock(0);
+
         
-        model.addMonster(type, xCoord, yCoord);
+        model.addMonster(type, startBlock.getxCoord(), startBlock.getyCoord());
     }
 
 
