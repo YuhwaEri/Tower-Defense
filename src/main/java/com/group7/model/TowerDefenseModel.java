@@ -5,6 +5,8 @@ import com.group7.model.Tower.*;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
 public class TowerDefenseModel {
 
@@ -20,6 +22,8 @@ public class TowerDefenseModel {
 
     private Maps map;
 
+    PropertyChangeSupport pcs;
+
     public TowerDefenseModel() {
         this.money = 0;
 
@@ -34,8 +38,23 @@ public class TowerDefenseModel {
         this.width = map.getWidth();
         this.length = map.getLength();
 
+        pcs = new  PropertyChangeSupport(this);
+    }
+
+    public void addObserver(PropertyChangeListener l) {
+        pcs.addPropertyChangeListener(l);
+    }
+
+    public void monstersUpdated(List<Monster> oldMonsters) {
+        pcs.firePropertyChange("monsters", oldMonsters, monsters);
 
     }
+
+    public void towersUpdated(List<Tower> oldTowers) {
+        pcs.firePropertyChange("towers", oldTowers, towers);
+    }
+
+
 
     public Maps getMap() {
         return map;
@@ -46,7 +65,11 @@ public class TowerDefenseModel {
     }
 
     public void setMoney(int money) {
+
+        int oldMoney = this.money;
         this.money = money;
+
+        pcs.firePropertyChange("money", oldMoney, this.money);
 
     }
 
@@ -70,11 +93,15 @@ public class TowerDefenseModel {
 
         this.monsters = monsters;
 
+        monstersUpdated(null);
+
     }
 
     public void setTowers(List<Tower> towers) {
 
         this.towers = towers;
+
+        towersUpdated(null);
     }
 
     public void addTower(TowerType type, int xCoord, int yCoord) {
@@ -84,6 +111,8 @@ public class TowerDefenseModel {
         newTower.setYCoord(yCoord);
 
         towers.add(newTower);
+
+        towersUpdated(null);
 
     }
 
@@ -95,11 +124,15 @@ public class TowerDefenseModel {
 
         monsters.add(newMonster);
 
+        monstersUpdated(null);
+
     }
 
     public void removeTower(Tower tower) {
         
         towers.remove(tower);
+
+        towersUpdated(null);
 
     }
 
@@ -112,11 +145,15 @@ public class TowerDefenseModel {
             }
         }
 
+        towersUpdated(null);
+
     }
 
     public void removeMonster(Monster monster) {
 
         monsters.remove(monster);
+
+        monstersUpdated(null);
     }
 
     public void removeMonster(int monsterID) {
@@ -127,6 +164,8 @@ public class TowerDefenseModel {
                 return;
             }
         }
+
+        monstersUpdated(null);
     }
 
     public int getKills() {
@@ -134,7 +173,11 @@ public class TowerDefenseModel {
     }
 
     public void setKills(int kills) {
+
+        int oldKills = this.kills;
         this.kills = kills;
+
+        pcs.firePropertyChange("kills", oldKills, this.kills);
     }
 
     public int addKills(int kills) {
@@ -148,7 +191,11 @@ public class TowerDefenseModel {
     }
 
     public void setLives(int lives) {
+
+        int oldLives = this.lives;
         this.lives = lives;
+
+        pcs.firePropertyChange("lives", oldLives, this.lives);
     }
 
     public int modifyLives(int delta) {
