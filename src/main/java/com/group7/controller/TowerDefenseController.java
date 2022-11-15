@@ -22,6 +22,7 @@ public class TowerDefenseController {
 
         model.setMoney(100);
         model.setLives(100);
+
     }
 
     public List<Monster> getMonsters() {
@@ -326,6 +327,8 @@ public class TowerDefenseController {
                 "Transaction of -$" + amount + " failed; only $" + model.getMoney() + " available.");
         }
 
+        model.setMoney(newMoney);
+
         return newMoney;
 
     }
@@ -352,6 +355,10 @@ public class TowerDefenseController {
      */
     public void setLives(int lives) {
         model.setLives(lives);
+    }
+
+    public int modifyLives(int delta) {
+        return model.modifyLives(delta);
     }
 
 
