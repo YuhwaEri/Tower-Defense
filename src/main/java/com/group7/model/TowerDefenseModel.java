@@ -46,12 +46,13 @@ public class TowerDefenseModel {
     }
 
     public void monstersUpdated() {
-        pcs.firePropertyChange("monsters", false, false);
+        pcs.firePropertyChange("monsters", false, true);
 
     }
 
     public void towersUpdated() {
-        pcs.firePropertyChange("towers", false, false);
+        pcs.firePropertyChange("towers", false, true);
+        System.out.println("Towers Updated");
     }
 
 

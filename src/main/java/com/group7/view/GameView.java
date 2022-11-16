@@ -89,10 +89,10 @@ public class GameView extends BorderPane{
                         System.out.println("Tower placed at " + col + ":" + row);
                     }
                     else if (removeTowerMode){
-                        controller.removeTower(cell.getUserData());
+                        controller.removeTower((Tower) cell.getUserData());
                         setUserData(null);
                         removeTowerMode = false;
-                        //cellGrid.get(row).get(col).setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, null, null)));
+                        cellGrid.get(row).get(col).setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, null, null)));
                         System.out.println("Tower removed at " + col + ":" + row);
                     }
                 });
@@ -131,6 +131,8 @@ public class GameView extends BorderPane{
         for (Tower tower: controller.getTowers()){
             int x = tower.getXCoord();
             int y = tower.getYCoord();
+
+            System.out.println(controller.getTowers().size());
 
             cellGrid.get(y).get(x).setBackground(new Background(new BackgroundImage (TowerDefenseView.tower, BackgroundRepeat.NO_REPEAT,
                         BackgroundRepeat.NO_REPEAT,
