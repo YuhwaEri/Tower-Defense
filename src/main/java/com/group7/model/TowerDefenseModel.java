@@ -104,7 +104,7 @@ public class TowerDefenseModel {
         towersUpdated();
     }
 
-    public void addTower(TowerType type, int xCoord, int yCoord) {
+    public Tower addTower(TowerType type, int xCoord, int yCoord) {
 
         Tower newTower = towerFactory.createTower(type);
         newTower.setXCoord(xCoord);
@@ -113,6 +113,8 @@ public class TowerDefenseModel {
         towers.add(newTower);
 
         towersUpdated();
+
+        return newTower;
 
     }
 
