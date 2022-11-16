@@ -52,7 +52,6 @@ public class TowerDefenseModel {
 
     public void towersUpdated() {
         pcs.firePropertyChange("towers", false, true);
-        System.out.println("Towers Updated");
     }
 
 

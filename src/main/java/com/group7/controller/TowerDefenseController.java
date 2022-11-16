@@ -245,8 +245,13 @@ public class TowerDefenseController {
      * @param type type of tower to place
      * @param xCoord x-coordinate where tower should be placed
      * @param yCoord y-coordinate where tower should be placed
+     * @throws InvalidTowerLocation
      */
-    public Tower placeTower(TowerType type, int xCoord, int yCoord) {
+    public Tower placeTower(TowerType type, int xCoord, int yCoord) throws InvalidTowerLocation {
+
+        if (isOnPath(xCoord, yCoord)) {
+            throw new InvalidTowerLocation("Cannot place tower on path.");
+        }
         
         return model.addTower(type, xCoord, yCoord);
 
@@ -259,8 +264,9 @@ public class TowerDefenseController {
      * @param XCoord x-coordinate where tower should be placed
      * @param yCoord y-coordinate where tower should be placed
      * @throws InsufficientFundsException thrown if not enough money for purchase
+     * @throws InvalidTowerLocation
      */
-    public Tower purchaseTower(TowerType type, int XCoord, int yCoord) throws InsufficientFundsException {
+    public Tower purchaseTower(TowerType type, int XCoord, int yCoord) throws InsufficientFundsException, InvalidTowerLocation {
         
         this.subtractMoney(type.getCost());
         return placeTower(type, XCoord, yCoord);
@@ -413,6 +419,14 @@ public class TowerDefenseController {
         // but if we have hardcoded monster info per level saved somewhere, we can also put this info in there too)
 
 
+    }
+
+    public int getBoardWidth() {
+        return model.getWidth();
+    }
+
+    public int getBoardLength() {
+        return model.getLength();
     }
 }
 

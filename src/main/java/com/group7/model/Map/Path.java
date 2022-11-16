@@ -44,11 +44,15 @@ public class Path {
 
     public boolean isOnPath(int xCoord, int yCoord) {
 
+        boolean result;
+
         Block tmpBlock = new Block(xCoord, yCoord);
 
         if (path.contains(tmpBlock)) {
-            return true;
-        } else return false;
+            result = true;
+        } else result = false;
+
+        return result;
 
     }
 
