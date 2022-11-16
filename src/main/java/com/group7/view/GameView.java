@@ -65,14 +65,6 @@ public class GameView extends BorderPane{
         setCenter(gridPane);
         setBottom(bottomMenu);
         
-  
-
-        try {
-            cellGrid.get(5).get(3).getChildren().add(new ImageView(new Image(new FileInputStream("src/main/resources/monster3.png"), 80, 80, false, false)));
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
     }
 
     private void setupGameBoard(GridPane gridPane, int width, int length){
