@@ -246,9 +246,11 @@ public class TowerDefenseController {
      * @param xCoord x-coordinate where tower should be placed
      * @param yCoord y-coordinate where tower should be placed
      */
-    public void placeTower(TowerType type, int xCoord, int yCoord) {
+    public Tower placeTower(TowerType type, int xCoord, int yCoord) {
         
-        model.addTower(type, xCoord, yCoord);
+        return model.addTower(type, xCoord, yCoord);
+
+
     }
 
     /**
@@ -258,10 +260,10 @@ public class TowerDefenseController {
      * @param yCoord y-coordinate where tower should be placed
      * @throws InsufficientFundsException thrown if not enough money for purchase
      */
-    public void purchaseTower(TowerType type, int XCoord, int yCoord) throws InsufficientFundsException {
+    public Tower purchaseTower(TowerType type, int XCoord, int yCoord) throws InsufficientFundsException {
         
         this.subtractMoney(type.getCost());
-        placeTower(type, XCoord, yCoord);
+        return placeTower(type, XCoord, yCoord);
 
     }
 
