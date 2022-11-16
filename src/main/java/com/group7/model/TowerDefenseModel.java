@@ -45,13 +45,13 @@ public class TowerDefenseModel {
         pcs.addPropertyChangeListener(l);
     }
 
-    public void monstersUpdated(List<Monster> oldMonsters) {
-        pcs.firePropertyChange("monsters", oldMonsters, monsters);
+    public void monstersUpdated() {
+        pcs.firePropertyChange("monsters", false, false);
 
     }
 
-    public void towersUpdated(List<Tower> oldTowers) {
-        pcs.firePropertyChange("towers", oldTowers, towers);
+    public void towersUpdated() {
+        pcs.firePropertyChange("towers", false, false);
     }
 
 
@@ -93,7 +93,7 @@ public class TowerDefenseModel {
 
         this.monsters = monsters;
 
-        monstersUpdated(null);
+        monstersUpdated();
 
     }
 
@@ -101,10 +101,10 @@ public class TowerDefenseModel {
 
         this.towers = towers;
 
-        towersUpdated(null);
+        towersUpdated();
     }
 
-    public void addTower(TowerType type, int xCoord, int yCoord) {
+    public Tower addTower(TowerType type, int xCoord, int yCoord) {
 
         Tower newTower = towerFactory.createTower(type);
         newTower.setXCoord(xCoord);
@@ -112,7 +112,9 @@ public class TowerDefenseModel {
 
         towers.add(newTower);
 
-        towersUpdated(null);
+        towersUpdated();
+
+        return newTower;
 
     }
 
@@ -124,7 +126,7 @@ public class TowerDefenseModel {
 
         monsters.add(newMonster);
 
-        monstersUpdated(null);
+        monstersUpdated();
 
     }
 
@@ -132,7 +134,7 @@ public class TowerDefenseModel {
         
         towers.remove(tower);
 
-        towersUpdated(null);
+        towersUpdated();
 
     }
 
@@ -145,7 +147,7 @@ public class TowerDefenseModel {
             }
         }
 
-        towersUpdated(null);
+        towersUpdated();
 
     }
 
@@ -153,7 +155,7 @@ public class TowerDefenseModel {
 
         monsters.remove(monster);
 
-        monstersUpdated(null);
+        monstersUpdated();
     }
 
     public void removeMonster(int monsterID) {
@@ -165,7 +167,7 @@ public class TowerDefenseModel {
             }
         }
 
-        monstersUpdated(null);
+        monstersUpdated();
     }
 
     public int getKills() {
