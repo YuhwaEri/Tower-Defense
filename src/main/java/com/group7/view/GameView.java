@@ -15,6 +15,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import com.group7.controller.TowerDefenseController;
+import com.group7.model.Tower.Tower;
 import com.group7.model.Tower.TowerType;
 
 public class GameView extends BorderPane{
@@ -79,18 +80,19 @@ public class GameView extends BorderPane{
                 gridPane.add(cell, j, i); 
                 cell.setOnMouseClicked((event) -> {
                     if (placeTowerMode){
-                        controller.placeTower(TowerType.TOWER_2 , col, row);
+                        cell.setUserData(controller.placeTower(TowerType.TOWER_2 , col, row));
                         placeTowerMode = false;
-                        cellGrid.get(row).get(col).setBackground(new Background(new BackgroundImage (TowerDefenseView.tower, BackgroundRepeat.NO_REPEAT,
-                        BackgroundRepeat.NO_REPEAT,
-                        BackgroundPosition.CENTER,
-                        new BackgroundSize(60, 60, false, false, false, false) )));
+                        //cellGrid.get(row).get(col).setBackground(new Background(new BackgroundImage (TowerDefenseView.tower, BackgroundRepeat.NO_REPEAT,
+                        //BackgroundRepeat.NO_REPEAT,
+                        //BackgroundPosition.CENTER,
+                        //new BackgroundSize(60, 60, false, false, false, false) )));
                         System.out.println("Tower placed at " + col + ":" + row);
                     }
                     else if (removeTowerMode){
-                        //controller.removeTower(TowerType.TOWER_2 , col, row);
+                        controller.removeTower(cell.getUserData());
+                        setUserData(null);
                         removeTowerMode = false;
-                        cellGrid.get(row).get(col).setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, null, null)));
+                        //cellGrid.get(row).get(col).setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, null, null)));
                         System.out.println("Tower removed at " + col + ":" + row);
                     }
                 });
@@ -122,5 +124,19 @@ public class GameView extends BorderPane{
         removeTowerBtn.setOnMouseClicked((event) -> {
             removeTowerMode = true;
         });
+    }
+
+    void updateTowers(){
+
+        for (Tower tower: controller.getTowers()){
+            int x = tower.getXCoord();
+            int y = tower.getYCoord();
+
+            cellGrid.get(y).get(x).setBackground(new Background(new BackgroundImage (TowerDefenseView.tower, BackgroundRepeat.NO_REPEAT,
+                        BackgroundRepeat.NO_REPEAT,
+                        BackgroundPosition.CENTER,
+                        new BackgroundSize(60, 60, false, false, false, false) )));
+
+        }
     }
 }

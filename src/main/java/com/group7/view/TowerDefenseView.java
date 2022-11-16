@@ -47,6 +47,10 @@ public class TowerDefenseView extends Application implements PropertyChangeListe
 		System.out.println("\t(" + evt.getOldValue() + 
 							" -> " + evt.getNewValue() + ")");
 		System.out.println("Property in object " + evt.getSource());
+
+        if (evt.getPropertyName().equals("towers")){
+            gameView.updateTowers();
+        }
 	}
 
     private void setup(File file) {
