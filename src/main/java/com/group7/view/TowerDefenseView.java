@@ -1,5 +1,6 @@
 package com.group7.view;
 
+import java.util.ArrayList;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -16,8 +17,16 @@ import javafx.scene.image.Image;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
 public class TowerDefenseView extends Application implements PropertyChangeListener{
 
+    // Media player
+    private MediaPlayer mediaPlayer;
+    private double defaultVolume = .4;
+
+    // Images to be preloaded
     static Image terrain = null;
     static Image monster = null;
     static Image tower = null;
@@ -84,6 +93,9 @@ public class TowerDefenseView extends Application implements PropertyChangeListe
         primaryStage.setScene(scene);
         primaryStage.show();
 
+        // Start Media player
+        loadMedia();
+
        // -- TESTING LISTENER
         
         System.out.println("lives: " + controller.getLives());
@@ -105,5 +117,27 @@ public class TowerDefenseView extends Application implements PropertyChangeListe
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private void loadMedia(){
+        ArrayList<Media> songList = new ArrayList<>();
+        Media song1 = new Media(new File("src/main/resources/sound/Warmth.wav").toURI().toString());
+        Media song2 = new Media(new File("src/main/resources/sound/Chachokid.wav").toURI().toString());
+        songList.add(song2);
+        songList.add(song1);
+        playMusic(songList);
+    }
+
+    private void playMusic(ArrayList<Media> songList) {
+        // if the songs have not been loaded yet
+        if (songList.size() == 0) {
+            loadMedia();
+            return;
+        }
+        // looping the music selection if called after initializing
+        mediaPlayer = new MediaPlayer(songList.remove(0));
+        mediaPlayer.setVolume(defaultVolume);
+        mediaPlayer.play();
+        mediaPlayer.setOnEndOfMedia(() -> playMusic(songList));
     }
 }
