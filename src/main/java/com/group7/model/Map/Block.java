@@ -17,10 +17,22 @@ public class Block {
         this.yCoord = yCoord;
     }
 
-    public boolean equals(Block block) {
-        if (block.xCoord == this.xCoord && block.yCoord == this.yCoord) {
+    public boolean equals(int xCoord, int yCoord) {
+
+        if (this.xCoord == xCoord && this.yCoord == yCoord) {
             return true;
         } else return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        Block block = (Block) o;
+
+        if (block.xCoord == this.xCoord && block.yCoord == this.yCoord) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public int getxCoord() {
