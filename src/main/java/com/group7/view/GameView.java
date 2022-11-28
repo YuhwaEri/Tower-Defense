@@ -30,8 +30,6 @@ public class GameView extends BorderPane{
     private List<Tower> towers;
 
     public GameView(TowerDefenseView view, StackPane gameStack, TowerDefenseController controller, List<Tower> towers, List<Monster> monsters){
-        this.view = view;
-        this.gameStack = gameStack;
         this.controller = controller;
         this.monsters = monsters;
         this.towers = towers;
@@ -231,10 +229,6 @@ public class GameView extends BorderPane{
     void updateLives() {
         
         //TODO: implement
-
-    }
-
-    void updateMonsters(){
 
     }
 }
