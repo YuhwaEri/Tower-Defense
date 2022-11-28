@@ -1,5 +1,6 @@
 package com.group7.view;
 
+import java.util.ArrayList;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -20,14 +21,25 @@ import javafx.scene.image.Image;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
+import javafx.scene.Node;
+
 public class TowerDefenseView extends Application implements PropertyChangeListener{
 
+    // Media player
+    private MediaPlayer mediaPlayer;
+    private double defaultVolume = .2;
+
+    // Images to be preloaded
     static Image terrain = null;
     static Image monster = null;
     static Image tower = null;
     static Image bg = null;
     static Image placeTowerBtn = null;
-    static Image bottomBar;
+    static Image bottomBar = null;
+    static Image mainMenuBackground = null;
 
     private final StackPane gameStack = new StackPane();
 
@@ -38,6 +50,7 @@ public class TowerDefenseView extends Application implements PropertyChangeListe
     // fields
     private BorderPane viewHandler;
     private GameView gameView;
+    private MainMenu mainMenu;
 
 
     // model and controller
@@ -46,6 +59,7 @@ public class TowerDefenseView extends Application implements PropertyChangeListe
     private List<Tower> towers;
     private List<Monster> monsters;
 
+    private boolean isInGame = false;
 
     @Override
 	public void propertyChange(PropertyChangeEvent evt) {
@@ -101,11 +115,16 @@ public class TowerDefenseView extends Application implements PropertyChangeListe
         primaryStage.setTitle("TowerDefense");
         // initializing the internal classes
         loadSprites();
+        mainMenu = new MainMenu(this);
         gameView = new GameView(this, gameStack, controller, towers, monsters);
         viewHandler = new BorderPane();
-        Scene scene = new Scene(gameView, WINDOW_WIDTH, WINDOW_HEIGHT);
+        Scene scene = new Scene(viewHandler, WINDOW_WIDTH, WINDOW_HEIGHT);
+        viewHandler.setCenter(mainMenu);
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        // Start Media player
+        loadMedia();
 
     }
 
@@ -117,8 +136,51 @@ public class TowerDefenseView extends Application implements PropertyChangeListe
             tower = new Image(new FileInputStream("src/main/resources/tower2.png"), 60, 60, false, false);
             placeTowerBtn = new Image(new FileInputStream("src/main/resources/placeTower.png"));
             bottomBar = new Image(new FileInputStream("src/main/resources/toolbar.png"));
+            mainMenuBackground = new Image(new FileInputStream("src/main/resources/temp.png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
+
+    public void transitionBetweenGames(){
+        if(isInGame){
+            isInGame = false;
+            viewHandler.setCenter(mainMenu);
+        } else {
+            isInGame = true;
+            viewHandler.setCenter(gameView);
+        }
+    }
+
+    public void updateWindow(Node node){
+        viewHandler.setCenter(node);
+    }
+
+    private void loadMedia(){
+        ArrayList<Media> songList = new ArrayList<>();
+        Media song1 = new Media(new File("src/main/resources/sound/Warmth.wav").toURI().toString());
+        Media song2 = new Media(new File("src/main/resources/sound/Chachokid.wav").toURI().toString());
+        songList.add(song2);
+        songList.add(song1);
+        playMusic(songList);
+    }
+
+    private void playMusic(ArrayList<Media> songList) {
+        // if the songs have not been loaded yet
+        if (songList.size() == 0) {
+            loadMedia();
+            return;
+        }
+        // looping the music selection if called after initializing
+        mediaPlayer = new MediaPlayer(songList.remove(0));
+        mediaPlayer.setVolume(defaultVolume);
+        mediaPlayer.play();
+        mediaPlayer.setOnEndOfMedia(() -> playMusic(songList));
+    }
+
+    public void updateVolume(double newValue){
+        defaultVolume = newValue;
+        mediaPlayer.setVolume(newValue);
+    }
+
 }

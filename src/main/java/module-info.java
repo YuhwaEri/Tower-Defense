@@ -1,6 +1,7 @@
 module com.group7 {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.media;
     requires transitive java.desktop;
 
     opens com.group7 to javafx.fxml;
