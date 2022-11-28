@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.List;
+
 import com.group7.controller.TowerDefenseController;
 import com.group7.model.TowerDefenseModel;
+import com.group7.model.Monster.Monster;
+import com.group7.model.Tower.Tower;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -52,19 +56,35 @@ public class TowerDefenseView extends Application implements PropertyChangeListe
     // model and controller
     private TowerDefenseController controller;
     private TowerDefenseModel model;
+    private List<Tower> towers;
+    private List<Monster> monsters;
 
     private boolean isInGame = false;
 
     @Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		System.out.println("Property changed: " + evt.getPropertyName());
-		System.out.println("\t(" + evt.getOldValue() + 
-							" -> " + evt.getNewValue() + ")");
-		System.out.println("Property in object " + evt.getSource());
+
 
         if (evt.getPropertyName().equals("towers")){
             gameView.updateTowers();
         }
+
+        else if (evt.getPropertyName().equals("monsters")) {
+            gameView.updateMonsters();
+        }
+
+        else if (evt.getPropertyName().equals("kills")) {
+            gameView.updateKills();
+        }
+
+        else if (evt.getPropertyName().equals("money")) {
+            gameView.updateMoney();
+        }
+
+        else if (evt.getPropertyName().equals("lives")) {
+            gameView.updateLives();
+        }
+
 	}
 
     private void setup(File file) {
@@ -81,6 +101,9 @@ public class TowerDefenseView extends Application implements PropertyChangeListe
 
         controller = new TowerDefenseController(model);
 
+        this.towers = controller.getTowers();
+        this.monsters = controller.getMonsters();
+
         model.addObserver(this);
     }
    
@@ -93,7 +116,7 @@ public class TowerDefenseView extends Application implements PropertyChangeListe
         // initializing the internal classes
         loadSprites();
         mainMenu = new MainMenu(this);
-        gameView = new GameView(this, gameStack, controller);
+        gameView = new GameView(this, gameStack, controller, towers, monsters);
         viewHandler = new BorderPane();
         Scene scene = new Scene(viewHandler, WINDOW_WIDTH, WINDOW_HEIGHT);
         viewHandler.setCenter(mainMenu);
@@ -103,14 +126,6 @@ public class TowerDefenseView extends Application implements PropertyChangeListe
         // Start Media player
         loadMedia();
 
-       // -- TESTING LISTENER
-        
-        System.out.println("lives: " + controller.getLives());
-
-        controller.modifyLives(-5);
-        // At this point, action should've fired and propertyChanged() should've run and printed stuff
-
-        System.out.println("lives: " + controller.getLives()); // sanity check
     }
 
     private void loadSprites(){
