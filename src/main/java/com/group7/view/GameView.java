@@ -1,6 +1,8 @@
 package com.group7.view;
 
+import javafx.geometry.Pos;
 import javafx.geometry.Insets;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -11,6 +13,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.text.Position;
 
 import com.group7.controller.InvalidTowerLocation;
 import com.group7.controller.TowerDefenseController;
@@ -28,6 +32,10 @@ public class GameView extends BorderPane{
     private boolean removeTowerMode = false;
     private List<Monster> monsters;
     private List<Tower> towers;
+
+    // fields
+    private Label moneyCount;
+    private Label livesCount;
 
     public GameView(TowerDefenseView view, StackPane gameStack, TowerDefenseController controller, List<Tower> towers, List<Monster> monsters){
         this.controller = controller;
@@ -56,7 +64,7 @@ public class GameView extends BorderPane{
         setTop(topMenu);
         setCenter(gridPane);
         setBottom(bottomMenu);
-        
+
     }
 
     private void setupGameBoard(GridPane gridPane, int width, int length){
@@ -121,10 +129,43 @@ public class GameView extends BorderPane{
         topMenu.setBackground(new Background(new BackgroundImage(TowerDefenseView.bottomBar, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
         topMenu.setPadding(new Insets(0));
         topMenu.setPrefSize(TowerDefenseView.WINDOW_WIDTH, 120);
+        topMenu.setPadding(new Insets(5));
+        
+        
+        // Stats Window creation
+        StackPane moneyWindow = new StackPane();
+        topMenu.getChildren().add(moneyWindow);
+        moneyWindow.setAlignment(Pos.CENTER);
+
+        moneyCount = new Label("Gold " + Integer.toString(controller.getMoney()));
+        moneyCount.setFont(new Font("Source Code Pro", 30));
+        HBox.setMargin(moneyWindow, new Insets(0,0,0,450));
+        moneyWindow.getChildren().add(moneyCount);
+
+        StackPane livesWindow = new StackPane();
+        topMenu.getChildren().add(livesWindow);
+        livesWindow.setAlignment(Pos.CENTER);
+
+        livesCount = new Label("Lives " + Integer.toString(controller.getLives()));
+        livesCount.setFont(new Font("Source Code Pro", 30));
+
+        HBox.setMargin(livesWindow, new Insets(0,0,0,30));
+        livesWindow.getChildren().add(livesCount);
+
+        ImageView startRoundBtn = new ImageView(TowerDefenseView.startRoundBtn);
+        HBox.setMargin(startRoundBtn, new Insets(0,0,0,200));
+        startRoundBtn.setOnMouseClicked((event)-> {
+            // Start ticker
+        });
+        topMenu.getChildren().add(startRoundBtn);
+
+        livesCount.setTextFill(Color.WHITE);
+        moneyCount.setTextFill(Color.WHITE);
+
     }
 
     private void setupBottomMenu(HBox bottomMenu){
-        bottomMenu.setPadding(new Insets(0));
+        bottomMenu.setPadding(new Insets(5));
         bottomMenu.setPrefSize(TowerDefenseView.WINDOW_WIDTH, 120);
         ImageView placeTowerBtn = new ImageView(TowerDefenseView.placeTowerBtn);
         ImageView removeTowerBtn = new ImageView(TowerDefenseView.placeTowerBtn);

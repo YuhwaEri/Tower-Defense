@@ -320,6 +320,11 @@ public class TowerDefenseController {
         model.setMoney(amount);
     }
 
+    public int getMoney() {
+
+        return model.getMoney();
+    }
+
     /**
      * Subtracts money from the player's money.
      * @param amount the amount of money to be subtracted

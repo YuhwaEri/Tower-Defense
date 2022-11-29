@@ -40,6 +40,7 @@ public class TowerDefenseView extends Application implements PropertyChangeListe
     static Image placeTowerBtn = null;
     static Image bottomBar = null;
     static Image mainMenuBackground = null;
+    static Image startRoundBtn = null;
 
     private final StackPane gameStack = new StackPane();
 
@@ -137,6 +138,7 @@ public class TowerDefenseView extends Application implements PropertyChangeListe
             placeTowerBtn = new Image(new FileInputStream("src/main/resources/placeTower.png"));
             bottomBar = new Image(new FileInputStream("src/main/resources/toolbar.png"));
             mainMenuBackground = new Image(new FileInputStream("src/main/resources/temp.png"));
+            startRoundBtn = new Image(new FileInputStream("src/main/resources/startRoundBtn.png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
