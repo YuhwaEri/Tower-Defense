@@ -1,64 +1,100 @@
 package com.group7.model.Monster;
 
-public class Monster {
-    private int health;
-    private int moveSpeed;
-    private int size;
-    private int height;
-    private int attack;
-    private int attackSpeed;
-    private String picture;
-    private String name;
+import com.group7.model.TowerDefenseEntity;
+import com.group7.model.Map.Block;
+import com.group7.model.Map.Maps;
 
-    public Monster(){
-        
+public class Monster extends TowerDefenseEntity {
+    protected int monsterID;
+    protected MonsterType type;
+
+    protected int health;
+    protected int moveCooldown;
+    protected int moveCooldownRemaining;
+    protected int killPayout;
+    protected int livesTaken;
+
+    protected int blockNum;
+    
+
+
+    public Monster(MonsterType type, int monsterID) {
+        this.health = type.getHealth();
+        this.moveCooldown = type.getMoveCooldown();
+        this.moveCooldownRemaining = moveCooldown;
+        this.killPayout = type.getKillPayout();
+
+        this.picturePath = type.getPicturePath();
+        this.monsterID = monsterID;
+
     }
+
     public int getHealth() {
         return health;
     }
     public void setHealth(int health) {
         this.health = health;
     }
-    public int getMovespeed() {
-        return moveSpeed;
+    public int getMoveCooldown() {
+        return moveCooldown;
     }
-    public void setMovespeed(int moveSpeed) {
-        this.moveSpeed = moveSpeed;
+    public void setMoveCooldown(int moveCooldown) {
+        this.moveCooldown = moveCooldown;
     }
-    public int getSize() {
-        return size;
+
+    public int getMonsterID() {
+
+        return monsterID;
     }
-    public void setSize(int size) {
-        this.size = size;
+
+    public int getKillPayout() {
+        return killPayout;
     }
-    public int getHeight() {
-        return height;
+
+    public int getLivesTaken() {
+        return livesTaken;
     }
-    public void setHeight(int height) {
-        this.height = height;
+
+    public int getMoveCooldownRemaining() {
+        return moveCooldownRemaining;
     }
-    public int getAttack() {
-        return attack;
+
+    public void setMoveCooldownRemaining(int moveCooldownRemaining) {
+        this.moveCooldownRemaining = moveCooldownRemaining;
     }
-    public void setAttack(int attack) {
-        this.attack = attack;
+
+    public boolean decrementMoveCooldownRemaining(int n) {
+
+        moveCooldownRemaining -= n;
+
+        // if cooldown is not over
+        if (moveCooldownRemaining > 0) {
+
+            return false;
+
+        // if cooldown is over
+        } else {
+
+            // reset cooldown
+            moveCooldownRemaining = moveCooldown;
+
+            return true;
+        }
     }
-    public int getAttackSpeed() {
-        return attackSpeed;
+
+    public int getBlockNum() {
+        return blockNum;
     }
-    public void setAttackSpeed(int attackSpeed) {
-        this.attackSpeed = attackSpeed;
+
+    public void setBlockNum(Block block) {
+        this.blockNum = block.getBlockNum();
+
+        this.xCoord = block.getxCoord();
+        this.yCoord = block.getyCoord();
     }
-    public String getPicture() {
-        return picture;
-    }
-    public void setPicture(String picture) {
-        this.picture = picture;
-    }
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
+
+    public Block getBlock(Maps map) {
+
+        return map.getPath().getBlock(blockNum);
     }
 }

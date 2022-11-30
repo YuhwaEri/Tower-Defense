@@ -1,22 +1,33 @@
 package com.group7.model.Tower;
 
-public class Tower {
-    private int size;
-    private int cost;
-    private int attack;
-    private int attackSpeed;
-    private String picture;
-    private String name;
+import com.group7.model.TowerDefenseEntity;
 
-    public Tower(){
-        
+public class Tower extends TowerDefenseEntity {
+    protected int towerID;
+    protected TowerType type;
+
+    protected int cost;
+    protected int attack;
+    protected int attackCooldown;
+    protected double range;
+    protected int damageDealt;
+    protected int kills;
+    protected int cooldownRemaining;
+
+    public Tower(TowerType type, int towerID) {
+        this.cost = type.getCost();
+        this.attack = type.getAttack();
+        this.attackCooldown = type.getAttackCooldown();
+        this.cooldownRemaining = 0;
+        this.range = type.getRange();
+        this.damageDealt = 0;
+        this.kills = 0;
+
+        this.picturePath = type.getPicturePath();
+        this.towerID = towerID;
+        cooldownRemaining = 0;
     }
-    public int getSize() {
-        return size;
-    }
-    public void setSize(int size) {
-        this.size = size;
-    }
+
     public int getCost() {
         return cost;
     }
@@ -29,22 +40,86 @@ public class Tower {
     public void setAttack(int attack) {
         this.attack = attack;
     }
-    public int getAttack_speed() {
-        return attackSpeed;
+    public int getAttackCooldown() {
+        return attackCooldown;
     }
-    public void setAttack_speed(int attack_speed) {
-        this.attackSpeed = attack_speed;
+    public void setAttackCooldown(int attackCooldown) {
+        this.attackCooldown = attackCooldown;
     }
-    public String getPicture() {
-        return picture;
+
+    public int getTowerID() {
+        return towerID;
     }
-    public void setPicture(String picture) {
-        this.picture = picture;
+
+    public int getDamageDealt() {
+        return damageDealt;
     }
-    public String getName() {
-        return name;
+
+    public void setDamageDealt(int damageDealt) {
+        this.damageDealt = damageDealt;
     }
-    public void setName(String name) {
-        this.name = name;
+
+    public void addDamageDealt(int damageDealt) {
+        setDamageDealt(this.damageDealt + damageDealt);
     }
+
+    public int getKills() {
+        return kills;
+    }
+
+    public void setKills(int kills) {
+        this.kills = kills;
+    }
+
+    public int addKills(int kills) {
+        int newKills = this.kills + kills;
+
+        setKills(newKills);
+
+        return newKills;
+    }
+
+    public double getRange() {
+        return range;
+    }
+
+    public void setRange(double range) {
+        this.range = range;
+    }
+
+    public int getCooldownRemaining() {
+
+        return cooldownRemaining;
+    }
+
+    public void setCooldownRemaining(int cooldownRemaining) {
+
+        this.cooldownRemaining = cooldownRemaining;
+
+    }
+
+    public boolean decrementCooldownRemaining(int n) {
+
+        cooldownRemaining -= n;
+
+        // if cooldown is not over
+        if (cooldownRemaining > 0) {
+
+            return false;
+
+        // if cooldown is over
+        } else {
+
+            // reset cooldown
+            cooldownRemaining = attackCooldown;
+
+            return true;
+        }
+
+    }
+
+
+
+
+
 }

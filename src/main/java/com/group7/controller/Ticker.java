@@ -1,6 +1,7 @@
 package com.group7.controller;
 
 import com.group7.model.TowerDefenseModel;
+import com.group7.model.Monster.MonsterType;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -19,9 +20,11 @@ import javafx.util.Duration;
  */
 
 public abstract class Ticker {
-    private static final int STARTING_TICK_RATE = 30;
+    public static final int STARTING_TICK_RATE = 30;
     private static TowerDefenseModel model;
+    private static TowerDefenseController controller;
     private static Timeline t1;
+    private static int ticks = 0;
 
 
     /**
@@ -30,16 +33,29 @@ public abstract class Ticker {
      * 
      * @param model Model to be updated by event handler.
      */
-    public static void start(TowerDefenseModel model) {
+    public static void start(TowerDefenseModel model, TowerDefenseController controller) {
 
         Ticker.model = model;
+        Ticker.controller = controller;
         
-        // t1 = new Timeline(new KeyFrame(Duration.seconds(1.0 / STARTING_TICK_RATE), new AnimationHandler()));
+        t1 = new Timeline(new KeyFrame(Duration.seconds(1.0 / STARTING_TICK_RATE), e ->{
+            // Event handler that will run STARTING_TICK_RATE times per second
+            controller.handleTick(ticks);
+            //System.out.println("tick: " + ticks);
+
+            ticks++;
+        }));
         
-        // t1.setCycleCount(-1);
-        // t1.play();
+        t1.setCycleCount(-1);
+        t1.play();
         
 
+    }
+
+    public static void stop() {
+
+        t1.stop();
+        ticks = 0;
     }
     
 }
