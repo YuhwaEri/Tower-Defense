@@ -10,15 +10,22 @@ import java.util.Map;
 
 import com.group7.model.*;
 import com.group7.model.Map.Block;
+import com.group7.model.Map.Maps;
+import com.group7.model.Map.Path;
 
 
 public class TowerDefenseController {
 
     private TowerDefenseModel model;
+    private boolean roundActive;
+    private Path path;
+    private Maps map;
 
     public TowerDefenseController(TowerDefenseModel model) {
 
         this.model = model;
+        this.map = model.getMap();
+        this.path = map.getPath();
 
         model.setMoney(100);
         model.setLives(100);
@@ -372,7 +379,7 @@ public class TowerDefenseController {
 
     public boolean isOnPath(int xCoord, int yCoord) {
 
-        if (model.getMap().isOnPath(xCoord, yCoord)) {
+        if (map.isOnPath(xCoord, yCoord)) {
             return true;
         } else return false;
     }
@@ -427,6 +434,53 @@ public class TowerDefenseController {
 
     public int getBoardLength() {
         return model.getLength();
+    }
+
+    public void handleTick(int ticks) {
+
+
+        if (roundActive) {
+
+            for (Tower tower : model.getTowers()) {
+                
+                if (tower.decrementCooldownRemaining(1)) {
+
+                    initiateAttack(tower);
+
+                }
+
+            }
+
+            for (Monster monster : model.getMonsters()) {
+
+                if (monster.decrementMoveCooldownRemaining(1)) {
+
+                    initiateMove(monster);
+                }
+            }
+
+        }
+
+        
+    }
+
+    private void initiateAttack(Tower tower) {
+        // TODO: implement
+    }
+
+    private void initiateMove(Monster monster) {
+
+        int blockNum = monster.getBlockNum();
+
+        Block nextBlock = path.nextBlock(blockNum);
+
+        if (nextBlock == null) {
+            monsterExit(monster);
+        } else {
+            monster.setBlockNum(nextBlock);
+            model.monstersUpdated();
+        }
+
     }
 }
 

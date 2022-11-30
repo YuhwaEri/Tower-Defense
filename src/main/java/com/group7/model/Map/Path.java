@@ -76,9 +76,21 @@ public class Path {
         
     }
 
+    public Block nextBlock(int blockNum) {
+        if (blockNum < size()-1) {
+            return path.get(blockNum+1);
+        } else return null;
+    }
+
     public Block previousBlock(Block block) {
         int blockNum = block.getBlockNum();
 
+        if (blockNum > 0) {
+            return path.get(blockNum-1);
+        } else return null;
+    }
+
+    public Block previousBlock(int blockNum) {
         if (blockNum > 0) {
             return path.get(blockNum-1);
         } else return null;
@@ -92,5 +104,7 @@ public class Path {
     public Block getBlock(int blockNum) {
         return path.get(blockNum);
     }
+
+
 
 }

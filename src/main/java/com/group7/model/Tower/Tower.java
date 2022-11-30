@@ -12,6 +12,7 @@ public class Tower extends TowerDefenseEntity {
     protected double range;
     protected int damageDealt;
     protected int kills;
+    protected int cooldownRemaining;
 
     public Tower(TowerType type, int towerID) {
         this.cost = type.getCost();
@@ -23,6 +24,7 @@ public class Tower extends TowerDefenseEntity {
 
         this.picturePath = type.getPicturePath();
         this.towerID = towerID;
+        cooldownRemaining = 0;
     }
 
     public int getCost() {
@@ -83,6 +85,39 @@ public class Tower extends TowerDefenseEntity {
     public void setRange(double range) {
         this.range = range;
     }
+
+    public int getCooldownRemaining() {
+
+        return cooldownRemaining;
+    }
+
+    public void setCooldownRemaining(int cooldownRemaining) {
+
+        this.cooldownRemaining = cooldownRemaining;
+
+    }
+
+    public boolean decrementCooldownRemaining(int n) {
+
+        cooldownRemaining -= n;
+
+        // if cooldown is not over
+        if (cooldownRemaining > 0) {
+
+            return false;
+
+        // if cooldown is over
+        } else {
+
+            // reset cooldown
+            cooldownRemaining = attackCooldown;
+
+            return true;
+        }
+
+    }
+
+
 
 
 
