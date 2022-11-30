@@ -13,20 +13,52 @@ public class Monster extends TowerDefenseEntity {
     protected int moveCooldownRemaining;
     protected int killPayout;
     protected int livesTaken;
+    protected boolean isHit;
 
     protected int blockNum;
-    
 
+    protected double x;
+    protected double y;
 
     public Monster(MonsterType type, int monsterID) {
         this.health = type.getHealth();
         this.moveCooldown = type.getMoveCooldown();
         this.moveCooldownRemaining = moveCooldown;
         this.killPayout = type.getKillPayout();
+        this.isHit = false;
 
         this.picturePath = type.getPicturePath();
         this.monsterID = monsterID;
+        this.x = -1;
+        this.y = -1;
 
+    }
+
+    public double getXPos(){
+        return this.x;
+    }
+
+    public double getYPos(){
+        return this.y;
+    }
+
+    public void setXPos(double x){
+        this.x = x;
+    }
+
+    public void setYPos(double y){
+        this.y = y;
+    }
+
+    public void setHitPicturePath(){
+        if (this.isHit){
+            this.picturePath = this.picturePath.substring(0, this.picturePath.length() - 7) + ".png";
+            this.isHit = false;
+        }
+        else{
+            this.picturePath = this.picturePath.substring(0, this.picturePath.length() - 4) + "hit.png";
+            this.isHit = true;
+        }
     }
 
     public int getHealth() {

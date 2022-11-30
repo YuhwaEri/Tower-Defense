@@ -188,10 +188,11 @@ public class TowerDefenseController {
         
         if (monsterHealth < attackPts) {
             attackPts = monsterHealth;
-            
+
         }
         
         tower.addDamageDealt(attackPts);
+        monster.setHitPicturePath();
 
         if (this.modifyMonsterHealth(monster, attackPts * -1) <= 0) {
             this.killMonster(tower, monster);
@@ -311,7 +312,6 @@ public class TowerDefenseController {
 
         Block startBlock = model.getMap().getPath().getBlock(0);
 
-        
         model.addMonster(type, startBlock.getxCoord(), startBlock.getyCoord());
     }
 
@@ -491,9 +491,11 @@ public class TowerDefenseController {
             for (Monster monster : model.getMonsters()) {
 
                 if (monster.decrementMoveCooldownRemaining(1)) {
-
                     initiateMove(monster);
-                
+                }
+                else {
+                    incrementMonster(monster);
+                    model.monstersUpdated();
                 }
             }
 
@@ -513,6 +515,20 @@ public class TowerDefenseController {
         Monster closestMonster = getClosestMonsterInRange(tower);
 
         giveDamage(tower, closestMonster);
+    }
+
+    public void incrementMonster(Monster monster){
+        int blockNum = monster.getBlockNum();
+        Block nextBlock = path.nextBlock(blockNum);
+        Block currBlock = path.previousBlock(nextBlock);
+
+        if(nextBlock.getxCoord() > currBlock.getxCoord()){
+            monster.setXPos(monster.getXPos() + 1/60);
+        }
+
+        if(nextBlock.getyCoord() > currBlock.getyCoord()){
+            monster.setYPos(monster.getYPos() + 1/60);
+        }
     }
 
     private void initiateMove(Monster monster) {

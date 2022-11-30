@@ -170,10 +170,11 @@ public class GameView extends BorderPane{
     }
 
     private void setupBottomMenu(HBox bottomMenu){
+        bottomMenu.setBackground(new Background(new BackgroundFill(Color.GREY, CornerRadii.EMPTY, Insets.EMPTY)));
         bottomMenu.setPadding(new Insets(5));
         bottomMenu.setPrefSize(TowerDefenseView.WINDOW_WIDTH, 120);
         ImageView placeTowerBtn = new ImageView(TowerDefenseView.placeTowerBtn);
-        ImageView removeTowerBtn = new ImageView(TowerDefenseView.placeTowerBtn);
+        ImageView removeTowerBtn = new ImageView(TowerDefenseView.removeTowerBtn);
 
         // Button to place towers
         bottomMenu.getChildren().add(placeTowerBtn);
@@ -230,15 +231,6 @@ public class GameView extends BorderPane{
     void updateMonsters() {
 
         //TODO: implement
-
-        for (Monster monster : monsters) {
-            int x = monster.getXCoord();
-            int y = monster.getYCoord();
-
-            addMonsterToCell(monster, x, y);
-
-        }
-
     }
 
     void moveMonster(Block before, Monster monster) {
@@ -279,17 +271,26 @@ public class GameView extends BorderPane{
         Pane cell = cellGrid.get(yCoord).get(xCoord);
 
 
-        ImageView iv = new ImageView(TowerDefenseView.monster);
+        //ImageView iv = new ImageView(TowerDefenseView.monster);
+        ImageView iv;
+        try {
+            iv = new ImageView(new Image(new FileInputStream(monster.getPicturePath())));
+            iv.setUserData(monster);
 
-        iv.setUserData(monster);
+            int monstersInCell = cell.getChildren().size();
+    
+            iv.fitWidthProperty().bind(cell.widthProperty());
+            iv.fitHeightProperty().bind(cell.heightProperty());
+            iv.setX(monstersInCell * 3 - 10);
 
-        int monstersInCell = cell.getChildren().size();
-
-        iv.fitWidthProperty().bind(cell.widthProperty());
-        iv.fitHeightProperty().bind(cell.heightProperty());
-        iv.setX(monstersInCell * 3 - 10);
-
-        cell.getChildren().add(iv);
+            
+            iv.setX(TowerDefenseView.WINDOW_WIDTH / controller.getBoardLength() * xCoord);
+    
+            cell.getChildren().add(iv);
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
         Rectangle clip = new Rectangle(0, 0, 0, 0);
         clip.widthProperty().bind(cell.widthProperty());

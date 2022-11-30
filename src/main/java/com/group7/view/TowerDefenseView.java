@@ -39,6 +39,7 @@ public class TowerDefenseView extends Application implements PropertyChangeListe
     static Image tower = null;
     static Image bg = null;
     static Image placeTowerBtn = null;
+    static Image removeTowerBtn = null;
     static Image bottomBar = null;
     static Image mainMenuBackground = null;
     static Image startRoundBtn = null;
@@ -147,10 +148,11 @@ public class TowerDefenseView extends Application implements PropertyChangeListe
         try{
             bg = new Image(new FileInputStream("src/main/resources/map1.png"));
             terrain = new Image(new FileInputStream("src/main/resources/grass.png"));
-            monster = new Image(new FileInputStream("src/main/resources/monster3.png"));
+            monster = new Image(new FileInputStream("src/main/resources/monster1.png"));
             tower = new Image(new FileInputStream("src/main/resources/tower2.png"), 60, 60, false, false);
-            placeTowerBtn = new Image(new FileInputStream("src/main/resources/placeTower.png"));
-            bottomBar = new Image(new FileInputStream("src/main/resources/toolbar.png"));
+            placeTowerBtn = new Image(new FileInputStream("src/main/resources/placeTower.png"), 120, 120, false, false);
+            removeTowerBtn = new Image(new FileInputStream("src/main/resources/removeTower.png"), 120, 120, false, false);
+            bottomBar = new Image(new FileInputStream("src/main/resources/toolbar.png"), 600, 120, false, false);
             mainMenuBackground = new Image(new FileInputStream("src/main/resources/temp.png"));
             startRoundBtn = new Image(new FileInputStream("src/main/resources/startRoundBtn.png"));
         } catch (FileNotFoundException e) {
