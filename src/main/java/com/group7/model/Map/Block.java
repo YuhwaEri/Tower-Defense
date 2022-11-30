@@ -26,13 +26,18 @@ public class Block {
 
     @Override
     public boolean equals(Object o) {
-        Block block = (Block) o;
 
-        if (block.xCoord == this.xCoord && block.yCoord == this.yCoord) {
-            return true;
-        } else {
-            return false;
-        }
+        if (o instanceof Block) {
+            Block block = (Block) o;
+
+            if (block.xCoord == this.xCoord && block.yCoord == this.yCoord) {
+                return true;
+            } else {
+                return false;
+            }
+        } else return false;
+
+        
     }
 
     public int getxCoord() {

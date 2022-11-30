@@ -2,6 +2,7 @@ package com.group7.model.Monster;
 
 import com.group7.model.TowerDefenseEntity;
 import com.group7.model.Map.Block;
+import com.group7.model.Map.Maps;
 
 public class Monster extends TowerDefenseEntity {
     protected int monsterID;
@@ -20,6 +21,7 @@ public class Monster extends TowerDefenseEntity {
     public Monster(MonsterType type, int monsterID) {
         this.health = type.getHealth();
         this.moveCooldown = type.getMoveCooldown();
+        this.moveCooldownRemaining = moveCooldown;
         this.killPayout = type.getKillPayout();
 
         this.picturePath = type.getPicturePath();
@@ -89,5 +91,10 @@ public class Monster extends TowerDefenseEntity {
 
         this.xCoord = block.getxCoord();
         this.yCoord = block.getyCoord();
+    }
+
+    public Block getBlock(Maps map) {
+
+        return map.getPath().getBlock(blockNum);
     }
 }

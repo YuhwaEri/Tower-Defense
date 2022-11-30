@@ -2,8 +2,8 @@ package com.group7.model.Tower;
 
 public enum TowerType {
 
-    TOWER_1(80, 25, 2, 1000, "src/main/resources/tower1.png"),
-    TOWER_2(160, 50, 1, 1000, "src/main/resources/tower2.png"),
+    TOWER_1(80, 25, 30, 1000, "src/main/resources/tower1.png"),
+    TOWER_2(160, 100, 30, 1000, "src/main/resources/tower2.png"),
     TOWER_3(125, 125, 3, 1000, "src/main/resources/tower3.png");
 
     private final int cost;

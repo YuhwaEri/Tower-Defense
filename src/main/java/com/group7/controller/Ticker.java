@@ -20,8 +20,9 @@ import javafx.util.Duration;
  */
 
 public abstract class Ticker {
-    private static final int STARTING_TICK_RATE = 30;
+    public static final int STARTING_TICK_RATE = 30;
     private static TowerDefenseModel model;
+    private static TowerDefenseController controller;
     private static Timeline t1;
     private static int ticks = 0;
 
@@ -35,10 +36,12 @@ public abstract class Ticker {
     public static void start(TowerDefenseModel model, TowerDefenseController controller) {
 
         Ticker.model = model;
+        Ticker.controller = controller;
         
         t1 = new Timeline(new KeyFrame(Duration.seconds(1.0 / STARTING_TICK_RATE), e ->{
             // Event handler that will run STARTING_TICK_RATE times per second
             controller.handleTick(ticks);
+            //System.out.println("tick: " + ticks);
 
             ticks++;
         }));
@@ -47,6 +50,12 @@ public abstract class Ticker {
         t1.play();
         
 
+    }
+
+    public static void stop() {
+
+        t1.stop();
+        ticks = 0;
     }
     
 }

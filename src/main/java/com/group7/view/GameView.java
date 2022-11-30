@@ -2,6 +2,7 @@ package com.group7.view;
 
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,7 +18,9 @@ import java.util.List;
 import javax.swing.text.Position;
 
 import com.group7.controller.InvalidTowerLocation;
+import com.group7.controller.Ticker;
 import com.group7.controller.TowerDefenseController;
+import com.group7.model.Map.Block;
 import com.group7.model.Monster.Monster;
 import com.group7.model.Monster.MonsterType;
 import com.group7.model.Tower.Tower;
@@ -155,6 +158,8 @@ public class GameView extends BorderPane{
         ImageView startRoundBtn = new ImageView(TowerDefenseView.startRoundBtn);
         HBox.setMargin(startRoundBtn, new Insets(0,0,0,200));
         startRoundBtn.setOnMouseClicked((event)-> {
+
+            controller.startRound();
             // Start ticker
         });
         topMenu.getChildren().add(startRoundBtn);
@@ -215,11 +220,13 @@ public class GameView extends BorderPane{
         }
 
         // JUST TESTING SPAWNING
-        controller.spawnMonster(MonsterType.MONSTER_1);
+        //controller.spawnMonster(MonsterType.MONSTER_1);
 
         //System.out.println("number of towers: " + controller.getTowers().size());
     }
 
+
+    // issue: doesn't get rid of monster when move / deleted
     void updateMonsters() {
 
         //TODO: implement
@@ -228,48 +235,95 @@ public class GameView extends BorderPane{
             int x = monster.getXCoord();
             int y = monster.getYCoord();
 
-            Pane cell = cellGrid.get(y).get(x);
-
-
-            ImageView iv = new ImageView(TowerDefenseView.monster);
-
-            int monstersInCell = cell.getChildren().size();
-
-            iv.fitWidthProperty().bind(cell.widthProperty());
-            iv.fitHeightProperty().bind(cell.heightProperty());
-            iv.setX(monstersInCell * 3 - 10);
-
-            cell.getChildren().add(iv);
-
-            Rectangle clip = new Rectangle(0, 0, 0, 0);
-            clip.widthProperty().bind(cell.widthProperty());
-            clip.heightProperty().bind(cell.heightProperty());
-            cell.setClip(clip);
-
-            
-
-            
-
+            addMonsterToCell(monster, x, y);
 
         }
 
+    }
+
+    void moveMonster(Block before, Monster monster) {
+
+
+        removeMonster(before, monster);
+
+
+        int newx = monster.getXCoord();
+        int newy = monster.getYCoord();
+
+
+        addMonsterToCell(monster, newx, newy);
+
+    }
+
+    void removeMonster(Block block, Monster monster) {
+
+        int oldx = block.getxCoord();
+        int oldy = block.getyCoord();
+        Pane oldCell = cellGrid.get(oldy).get(oldx);
+
+        Node nodeToRemove = null;
+
+        for (Node node : oldCell.getChildren()) {
+            if (node.getUserData() == monster) {
+                nodeToRemove = node;
+                break;
+                
+            }
+            
+        }
+        oldCell.getChildren().remove(nodeToRemove);
+
+    }
+
+    void addMonsterToCell(Monster monster, int xCoord, int yCoord) {
+        Pane cell = cellGrid.get(yCoord).get(xCoord);
+
+
+        ImageView iv = new ImageView(TowerDefenseView.monster);
+
+        iv.setUserData(monster);
+
+        int monstersInCell = cell.getChildren().size();
+
+        iv.fitWidthProperty().bind(cell.widthProperty());
+        iv.fitHeightProperty().bind(cell.heightProperty());
+        iv.setX(monstersInCell * 3 - 10);
+
+        cell.getChildren().add(iv);
+
+        Rectangle clip = new Rectangle(0, 0, 0, 0);
+        clip.widthProperty().bind(cell.widthProperty());
+        clip.heightProperty().bind(cell.heightProperty());
+        cell.setClip(clip);
+    }
+
+    void addMonsterToCell(Monster monster, Block block) {
+        addMonsterToCell(monster, block.getxCoord(), block.getyCoord());
+    }
+
+    void monsterGone(Block block) {
+        
     }
 
     void updateKills() {
         
         //TODO: implement
 
+        
+
     }
 
     void updateMoney() {
         
-        //TODO: implement
+        moneyCount.setText("Gold " + Integer.toString(controller.getMoney()));
 
     }
 
     void updateLives() {
         
         //TODO: implement
+
+        livesCount.setText("Lives " + Integer.toString(controller.getLives()));
 
     }
 }

@@ -18,6 +18,7 @@ public class Tower extends TowerDefenseEntity {
         this.cost = type.getCost();
         this.attack = type.getAttack();
         this.attackCooldown = type.getAttackCooldown();
+        this.cooldownRemaining = 0;
         this.range = type.getRange();
         this.damageDealt = 0;
         this.kills = 0;
