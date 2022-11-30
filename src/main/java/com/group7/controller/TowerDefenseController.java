@@ -20,6 +20,7 @@ public class TowerDefenseController {
     private boolean roundActive;
     private Path path;
     private Maps map;
+    private Level curLevel;
 
     public TowerDefenseController(TowerDefenseModel model) {
 
@@ -38,6 +39,10 @@ public class TowerDefenseController {
 
     public List<Tower> getTowers() {
         return model.getTowers();
+    }
+
+    public TowerDefenseModel getModel() {
+        return model;
     }
 
 
@@ -164,6 +169,8 @@ public class TowerDefenseController {
             return 0;
         }
 
+        removeMonster(monster);
+
         return model.modifyLives(livesTaken * -1);
     }
 
@@ -202,12 +209,18 @@ public class TowerDefenseController {
      * @param monster monster that has been killed
      */
     public void killMonster(Tower tower, Monster monster) {
+
+
         model.addKills(1);
         this.addMoney(monster.getKillPayout());
         
         tower.addKills(1);
 
         this.removeMonster(monster);
+
+        if (model.getMonsters().isEmpty() && curLevel.getMonsterRecipe().isEmpty()) {
+            endRound();
+        }
     }
 
     /**
@@ -401,6 +414,19 @@ public class TowerDefenseController {
 
     public void startRound() {
 
+        if (roundActive) return;
+
+        roundActive = true;
+
+        curLevel = model.getLevels().getFirst();
+
+        // may want to move this to when the round is over
+        model.getLevels().removeFirst();
+
+
+
+        Ticker.start(getModel(), this);
+
         // TODO: implement
         
         // start spawning in monsters
@@ -420,6 +446,8 @@ public class TowerDefenseController {
     }
 
     public void endRound() {
+
+        System.out.println("round ended");
 
         // TODO: implement
 
@@ -450,8 +478,12 @@ public class TowerDefenseController {
                 
                 if (tower.decrementCooldownRemaining(1)) {
 
-                    initiateAttack(tower);
+                    if (!model.getMonsters().isEmpty()) {
 
+                        initiateAttack(tower);
+                    }
+
+        
                 }
 
             }
@@ -461,7 +493,14 @@ public class TowerDefenseController {
                 if (monster.decrementMoveCooldownRemaining(1)) {
 
                     initiateMove(monster);
+                
                 }
+            }
+
+            if (curLevel.decrementSpawnTime(1)) {
+
+                MonsterType monsterTypeToSpawn = curLevel.getAndRemoveNextMonster().keySet().iterator().next();
+                spawnMonster(monsterTypeToSpawn);
             }
 
         }
@@ -470,7 +509,10 @@ public class TowerDefenseController {
     }
 
     private void initiateAttack(Tower tower) {
-        // TODO: implement
+
+        Monster closestMonster = getClosestMonsterInRange(tower);
+
+        giveDamage(tower, closestMonster);
     }
 
     private void initiateMove(Monster monster) {
@@ -480,10 +522,11 @@ public class TowerDefenseController {
         Block nextBlock = path.nextBlock(blockNum);
 
         if (nextBlock == null) {
+
             monsterExit(monster);
         } else {
-            monster.setBlockNum(nextBlock);
-            model.monstersUpdated();
+            model.moveMonster(monster, path.getBlock(blockNum), nextBlock);
+            
         }
 
     }

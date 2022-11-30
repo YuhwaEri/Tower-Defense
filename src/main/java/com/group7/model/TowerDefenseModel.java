@@ -1,12 +1,15 @@
 package com.group7.model;
+import com.group7.model.Map.Block;
 import com.group7.model.Map.Maps;
 import com.group7.model.Monster.*;
 import com.group7.model.Tower.*;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.File;
 
 public class TowerDefenseModel {
 
@@ -21,6 +24,8 @@ public class TowerDefenseModel {
     private MonsterFactory monsterFactory;
 
     private Maps map;
+
+    private LinkedList<Level> levels;
 
     PropertyChangeSupport pcs;
 
@@ -39,6 +44,23 @@ public class TowerDefenseModel {
         this.length = map.getLength();
 
         pcs = new  PropertyChangeSupport(this);
+
+        levels = readLevels();
+    }
+
+    private LinkedList<Level> readLevels() {
+        LinkedList<Level> levels = new LinkedList<>();
+
+        File dir = new File("src/main/resources/levels/");
+        File[] directoryListing = dir.listFiles();
+        if (directoryListing != null) {
+            for (File child : directoryListing) {
+                Level tmpLevel = new Level(child.getPath());
+                levels.add(tmpLevel);
+            }
+        }
+
+        return levels;
     }
 
     public void addObserver(PropertyChangeListener l) {
@@ -118,17 +140,6 @@ public class TowerDefenseModel {
 
     }
 
-    public void addMonster(MonsterType type, int xCoord, int yCoord) {
-
-        Monster newMonster = monsterFactory.createMonster(type);
-        newMonster.setXCoord(xCoord);
-        newMonster.setYCoord(yCoord);
-
-        monsters.add(newMonster);
-
-        monstersUpdated();
-
-    }
 
     public void removeTower(Tower tower) {
         
@@ -151,23 +162,40 @@ public class TowerDefenseModel {
 
     }
 
+    public void addMonster(MonsterType type, int xCoord, int yCoord) {
+
+        Monster newMonster = monsterFactory.createMonster(type);
+        newMonster.setXCoord(xCoord);
+        newMonster.setYCoord(yCoord);
+
+        monsters.add(newMonster);
+
+        pcs.firePropertyChange("monster-add", newMonster.getBlock(map), newMonster);
+
+    }
+
     public void removeMonster(Monster monster) {
 
         monsters.remove(monster);
 
-        monstersUpdated();
+        pcs.firePropertyChange("monster-remove", monster.getBlock(map), monster);
     }
 
     public void removeMonster(int monsterID) {
 
         for (Monster monster: monsters) {
             if (monster.getMonsterID() == monsterID) {
-                monsters.remove(monster);
-                return;
+                removeMonster(monster);
             }
         }
+    }
 
-        monstersUpdated();
+    public void moveMonster(Monster monster, Block oldBlock, Block newBlock) {
+
+        monster.setBlockNum(newBlock);
+
+        pcs.firePropertyChange("monster-move", oldBlock, monster);
+        
     }
 
     public int getKills() {
@@ -206,6 +234,10 @@ public class TowerDefenseModel {
         setLives(newLives);
 
         return newLives;
+    }
+
+    public LinkedList<Level> getLevels() {
+        return levels;
     }
 
 

@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.group7.controller.TowerDefenseController;
 import com.group7.model.TowerDefenseModel;
+import com.group7.model.Map.Block;
 import com.group7.model.Monster.Monster;
 import com.group7.model.Tower.Tower;
 
@@ -84,6 +85,19 @@ public class TowerDefenseView extends Application implements PropertyChangeListe
 
         else if (evt.getPropertyName().equals("lives")) {
             gameView.updateLives();
+        }
+
+        else if (evt.getPropertyName().equals("monster-move")) {
+            gameView.moveMonster((Block) evt.getOldValue(), (Monster) evt.getNewValue());
+        }
+
+        else if (evt.getPropertyName().equals("monster-remove")) {
+            gameView.removeMonster((Block) evt.getOldValue(), (Monster) evt.getNewValue());
+        }
+
+        else if (evt.getPropertyName().equals("monster-add")) {
+            
+            gameView.addMonsterToCell((Monster) evt.getNewValue(), (Block) evt.getOldValue());
         }
 
 	}
